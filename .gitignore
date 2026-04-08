@@ -1,0 +1,14 @@
+# Build artifacts
+build/
+cmake-build-*/
+*.o
+*.so
+montecarlo_gpu
+
+# Python
+__pycache__/
+*.py[cod]
+
+# OS
+.DS_Store
+*.swp
