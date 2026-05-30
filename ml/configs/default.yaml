@@ -1,0 +1,28 @@
+# Neural surrogate pricer configuration.
+# A single place for the dataset, model, and training hyperparameters so runs
+# are reproducible and easy to sweep.
+
+data:
+  n_samples: 120000        # total labeled options generated
+  val_fraction: 0.15
+  test_fraction: 0.15
+  seed: 42
+  # Sampling ranges for the pricing inputs. Prices are computed per unit strike
+  # so the model learns a scale invariant map.
+  moneyness_range: [0.6, 1.4]   # S / K
+  rate_range: [0.0, 0.08]       # r
+  vol_range: [0.05, 0.60]       # sigma
+  maturity_range: [0.05, 2.0]   # T in years
+
+model:
+  hidden_sizes: [128, 128, 128]
+  activation: relu
+  dropout: 0.0
+
+train:
+  epochs: 60
+  batch_size: 4096
+  lr: 0.001
+  weight_decay: 0.0
+  device: auto             # auto picks cuda, then mps, then cpu
+  checkpoint: ml/checkpoints/surrogate.pt
