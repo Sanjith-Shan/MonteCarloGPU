@@ -2,7 +2,11 @@
 numpy>=1.24
 scipy>=1.10
 matplotlib>=3.7
+pandas>=2.0
 
 # PyTorch drives the device agnostic Monte Carlo path and the neural surrogate
 # pricer. Install the CUDA build on a GPU host for the fastest path.
 torch>=2.1
+
+# Testing.
+pytest>=7.4
