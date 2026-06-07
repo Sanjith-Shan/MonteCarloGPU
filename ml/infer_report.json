@@ -1,0 +1,8 @@
+{
+  "device": "mps",
+  "n_options": 200000,
+  "surrogate_ms": 366.6518750251271,
+  "per_option_us": 1.8332593751256354,
+  "throughput_per_s": 545476.5504370972,
+  "rmse_vs_bs": 0.0026059636379125437
+}
