@@ -1,0 +1,23 @@
+services:
+  montecarlo:
+    build: .
+    image: montecarlo-gpu:latest
+    # Request all GPUs through the NVIDIA Container Toolkit.
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      # Benchmark JSON and charts land here on the host.
+      - ./results:/app/results
+      - ./ml:/app/ml
+    # Run the benchmark then generate the charts.
+    command: >
+      bash -c "python3 python/benchmark.py &&
+               python3 python/convergence.py &&
+               python3 python/plot_results.py"
