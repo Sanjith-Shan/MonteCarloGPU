@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: montecarlo-benchmark
+  labels:
+    app: montecarlo-gpu
+spec:
+  backoffLimit: 2
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        app: montecarlo-gpu
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: benchmark
+          image: montecarlo-gpu:latest
+          imagePullPolicy: IfNotPresent
+          command: ["bash", "-c"]
+          args:
+            - >
+              python3 python/benchmark.py &&
+              python3 python/convergence.py &&
+              python3 python/plot_results.py
+          resources:
+            limits:
+              # One GPU per pod. The NVIDIA device plugin schedules this onto a
+              # node with a free GPU.
+              nvidia.com/gpu: 1
+              cpu: "8"
+              memory: 32Gi
+            requests:
+              cpu: "4"
+              memory: 16Gi
+          volumeMounts:
+            - name: results
+              mountPath: /app/results
+      volumes:
+        - name: results
+          persistentVolumeClaim:
+            claimName: montecarlo-results
