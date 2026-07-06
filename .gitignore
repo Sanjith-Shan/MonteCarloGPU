@@ -28,6 +28,7 @@ results/*.json
 results/*.csv
 results/*.html
 results/*.log
+results/*.md
 !results/.gitkeep
 
 # Local build specification, not part of the shipped project
